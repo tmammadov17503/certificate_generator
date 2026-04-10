@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="shell shell-centered">
+  <article class="message-card login-card">
+    <p class="eyebrow">Organizer Access</p>
+    <h1>Sign in to manage certificate links</h1>
+    <p class="lead">This dashboard is protected because the app is meant to be public for participants, but private for the organizer.</p>
+
+    {% if error_message %}
+      <div class="alert alert-error">{{ error_message }}</div>
+    {% endif %}
+
+    <form method="post" class="stack-form">
+      <label for="password">Admin password</label>
+      <input id="password" name="password" type="password" required autofocus>
+      <button type="submit" class="primary-button">Open dashboard</button>
+    </form>
+  </article>
+</main>
+{% endblock %}

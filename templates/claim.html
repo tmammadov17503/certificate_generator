@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="shell shell-claim">
+  <section class="claim-layout">
+    <article class="preview-panel">
+      <p class="eyebrow">Certificate Preview</p>
+      <h1>Claim your PDF certificate</h1>
+      <p class="lead">Enter the recipient name once, then download the PDF. After a successful download, this link becomes unavailable.</p>
+
+      <div class="certificate-preview">
+        <img src="{{ url_for('static', filename='certificate-template.png') }}" alt="Certificate preview">
+        <div
+          class="certificate-name"
+          style="{{ name_box_style }}"
+          data-name-preview
+          data-placeholder="Recipient Name"
+        >{{ current_name }}</div>
+      </div>
+      <p class="preview-note">The preview is approximate. The PDF uses the exact template and placement.</p>
+    </article>
+
+    <article class="form-panel">
+      <span class="status-pill status-warning">One-time link</span>
+      <h2>Recipient name</h2>
+      <p class="panel-copy">Use the exact name that should appear on the certificate.</p>
+
+      {% if error_message %}
+        <div class="alert alert-error">{{ error_message }}</div>
+      {% endif %}
+
+      <form method="post" class="stack-form" data-claim-form>
+        <label for="name">Full name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          maxlength="80"
+          placeholder="Enter recipient name"
+          value="{{ current_name if current_name != 'Recipient Name' else '' }}"
+          autocomplete="name"
+          required
+          data-name-input
+        >
+        <button type="submit" class="primary-button" data-submit-label="Preparing PDF...">Download PDF once</button>
+      </form>
+
+      {% if link.label %}
+        <p class="meta-line">Link note: {{ link.label }}</p>
+      {% endif %}
+      <p class="meta-line">Link token: {{ link.token }}</p>
+    </article>
+  </section>
+</main>
+{% endblock %}

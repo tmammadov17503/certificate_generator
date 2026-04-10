@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="shell shell-centered">
+  <article class="message-card">
+    <span class="status-pill status-claimed">Already claimed</span>
+    <h1>This certificate link has already been used</h1>
+    {% if link and link.used_name %}
+      <p class="lead">The certificate for this link was already generated for <strong>{{ link.used_name }}</strong>.</p>
+    {% else %}
+      <p class="lead">This one-time certificate link is no longer available.</p>
+    {% endif %}
+    {% if link and link.used_at_display %}
+      <p class="meta-line">Claimed at {{ link.used_at_display }}</p>
+    {% endif %}
+    <p class="panel-copy">If the participant still needs access, the organizer will need to create a new link.</p>
+  </article>
+</main>
+{% endblock %}
