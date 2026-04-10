@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Noto Sans Local";
+  src: url("/static/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
   --bg: #eef6fb;
   --bg-accent: #d7edf8;
@@ -381,7 +388,7 @@ input:focus {
   justify-content: center;
   text-align: center;
   color: rgb(0, 100, 158);
-  font-family: "Calibri", "Candara", sans-serif;
+  font-family: "Noto Sans Local", "Calibri", "Candara", sans-serif;
   font-size: clamp(1rem, 3vw, 2.7rem);
   line-height: 1;
   padding: 0 10px;

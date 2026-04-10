@@ -31,6 +31,7 @@ http://127.0.0.1:5050
 ## Main folders
 
 - `static/certificate-template.png`: your certificate template
+- `static/fonts/NotoSans-Regular.ttf`: bundled open font used by the PDF renderer so name sizing stays correct in deployment
 
 ## Optional environment variables
 

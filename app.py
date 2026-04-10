@@ -13,6 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_TEMPLATE_IMAGE = BASE_DIR / "static" / "certificate-template.png"
+DEFAULT_BUNDLED_FONT = BASE_DIR / "static" / "fonts" / "NotoSans-Regular.ttf"
 
 NAME_BOX = (472, 592, 1532, 688)
 NAME_COLOR = (0, 100, 158)
@@ -20,6 +21,7 @@ MAX_FONT_SIZE = 92
 MIN_FONT_SIZE = 40
 FONT_CANDIDATES = [
     os.environ.get("CERTIFICATE_FONT_PATH", "").strip(),
+    str(DEFAULT_BUNDLED_FONT),
     r"C:\Windows\Fonts\calibri.ttf",
     r"C:\Windows\Fonts\arial.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Calibri.ttf",

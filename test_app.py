@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from app import create_app
 
@@ -21,6 +22,12 @@ class CertificateClaimAppTests(unittest.TestCase):
         response = self.client.post("/", data={"name": "Murad Orujov"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.mimetype, "application/pdf")
+
+    def test_bundled_font_is_available(self) -> None:
+        font_path = self.app.config["FONT_PATH"]
+        self.assertIsNotNone(font_path)
+        self.assertTrue(Path(font_path).exists())
+        self.assertTrue(str(font_path).endswith("NotoSans-Regular.ttf"))
 
     def test_invalid_name_is_rejected(self) -> None:
         response = self.client.post("/", data={"name": "1"})
