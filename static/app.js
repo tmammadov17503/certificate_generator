@@ -1,6 +1,7 @@
 const nameInput = document.querySelector("[data-name-input]");
 const namePreview = document.querySelector("[data-name-preview]");
 const claimForm = document.querySelector("[data-claim-form]");
+const codeInput = document.querySelector("[data-code-input]");
 
 if (nameInput && namePreview) {
   const placeholder = namePreview.dataset.placeholder || "Recipient Name";
@@ -11,6 +12,17 @@ if (nameInput && namePreview) {
 
   syncPreview();
   nameInput.addEventListener("input", syncPreview);
+}
+
+if (codeInput) {
+  const syncCode = () => {
+    const clean = codeInput.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 8);
+    const groups = clean.match(/.{1,4}/g) || [];
+    codeInput.value = groups.join("-");
+  };
+
+  syncCode();
+  codeInput.addEventListener("input", syncCode);
 }
 
 if (claimForm) {
@@ -31,9 +43,11 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
       return;
     }
 
+    const originalLabel = button.dataset.originalLabel || button.textContent;
+    button.dataset.originalLabel = originalLabel;
+
     try {
       await navigator.clipboard.writeText(value);
-      const originalLabel = button.textContent;
       button.textContent = "Copied";
       window.setTimeout(() => {
         button.textContent = originalLabel;
@@ -41,7 +55,7 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
     } catch (_error) {
       button.textContent = "Copy failed";
       window.setTimeout(() => {
-        button.textContent = "Copy link";
+        button.textContent = originalLabel;
       }, 1400);
     }
   });

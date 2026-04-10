@@ -4,9 +4,9 @@
 <main class="shell">
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">Certificate Link Studio</p>
-      <h1>One-time certificate links for your workshop</h1>
-      <p class="lead">Create a unique link, send it to a participant, and let them claim the PDF once by entering their name.</p>
+      <p class="eyebrow">Certificate Code Studio</p>
+      <h1>One public page, one-time codes for every participant</h1>
+      <p class="lead">Share the same website with everyone. Each participant enters their own one-time code and name to download the certificate PDF once.</p>
     </div>
     <div class="hero-badge hero-badge-stack">
       <span>Template ready</span>
@@ -19,89 +19,123 @@
     </div>
   </section>
 
+  <section class="summary-grid">
+    <article class="summary-card">
+      <p class="eyebrow">Total</p>
+      <strong>{{ summary.total }}</strong>
+      <p class="meta-line">Codes created</p>
+    </article>
+    <article class="summary-card">
+      <p class="eyebrow">Unused</p>
+      <strong>{{ summary.unused }}</strong>
+      <p class="meta-line">Still available</p>
+    </article>
+    <article class="summary-card">
+      <p class="eyebrow">Used</p>
+      <strong>{{ summary.used }}</strong>
+      <p class="meta-line">Already claimed</p>
+    </article>
+  </section>
+
   <section class="panel-grid">
     <article class="panel">
       <div class="panel-heading">
         <p class="eyebrow">Step 1</p>
-        <h2>Create links</h2>
+        <h2>Create one-time codes</h2>
       </div>
-      <p class="panel-copy">Generate one-time certificate claim links. If you leave the label empty, the link still works.</p>
+      <p class="panel-copy">Generate as many codes as you need. You only share one public page, so you no longer need a separate link for every participant.</p>
       {% if form_error %}
         <div class="alert alert-error">{{ form_error }}</div>
       {% endif %}
       <form method="post" class="stack-form">
         <label>
           Quantity
-          <input type="number" name="quantity" min="1" max="100" value="1">
+          <input type="number" name="quantity" min="1" max="500" value="1">
         </label>
         <label>
           Label (optional)
-          <input type="text" name="label" maxlength="120" placeholder="Workshop batch or recipient group">
+          <input type="text" name="label" maxlength="120" placeholder="Workshop batch or group name">
         </label>
-        <button type="submit" class="primary-button">Create one-time links</button>
+        <button type="submit" class="primary-button">Create one-time codes</button>
       </form>
     </article>
 
     <article class="panel">
       <div class="panel-heading">
         <p class="eyebrow">Step 2</p>
-        <h2>Send these links</h2>
+        <h2>Share this public page</h2>
       </div>
-      {% if generated_links %}
+      <p class="panel-copy">Everyone uses the same page below. Each participant needs their own unused code.</p>
+      <div class="share-box">
+        <a href="{{ public_claim_url }}" target="_blank" rel="noreferrer">{{ public_claim_url }}</a>
+        <div class="inline-actions">
+          <button type="button" class="ghost-button" data-copy-target="{{ public_claim_url }}">Copy public link</button>
+          <a href="{{ url_for('export_codes_csv') }}" class="ghost-link">Download all codes CSV</a>
+        </div>
+      </div>
+
+      {% if generated_codes %}
         <div class="generated-list">
-          {% for link in generated_links %}
+          {% for code in generated_codes %}
             <article class="generated-card">
-              <p class="token">{{ link.token }}</p>
-              <a href="{{ link.claim_url }}" target="_blank" rel="noreferrer">{{ link.claim_url }}</a>
-              <button type="button" class="ghost-button" data-copy-target="{{ link.claim_url }}">Copy link</button>
+              <p class="token">{{ code.display_code }}</p>
+              {% if code.label %}
+                <p class="meta-line">{{ code.label }}</p>
+              {% else %}
+                <p class="meta-line">No label</p>
+              {% endif %}
+              <button type="button" class="ghost-button" data-copy-target="{{ code.display_code }}">Copy code</button>
             </article>
           {% endfor %}
         </div>
       {% else %}
-        <p class="muted-note">Newly generated links will appear here, ready to copy and share.</p>
+        <p class="muted-note">Newly generated one-time codes will appear here.</p>
       {% endif %}
     </article>
   </section>
 
   <section class="panel panel-full">
     <div class="panel-heading">
-      <p class="eyebrow">Link Status</p>
-      <h2>Issued certificate links</h2>
+      <p class="eyebrow">Code Status</p>
+      <h2>Issued certificate codes</h2>
     </div>
 
-    {% if links %}
+    {% if codes %}
       <div class="link-list">
-        {% for link in links %}
+        {% for code in codes %}
           <article class="link-row">
             <div class="link-meta">
-              <p class="token">{{ link.token }}</p>
-              {% if link.label %}
-                <p class="meta-line">{{ link.label }}</p>
+              <p class="token">{{ code.display_code }}</p>
+              {% if code.label %}
+                <p class="meta-line">{{ code.label }}</p>
               {% else %}
                 <p class="meta-line">No label</p>
               {% endif %}
-              <p class="meta-line">Created {{ link.created_at_display }}</p>
+              <p class="meta-line">Created {{ code.created_at_display }}</p>
             </div>
 
             <div class="link-main">
-              <a href="{{ link.claim_url }}" target="_blank" rel="noreferrer">{{ link.claim_url }}</a>
-              <button type="button" class="ghost-button" data-copy-target="{{ link.claim_url }}">Copy link</button>
+              <a href="{{ public_claim_url }}" target="_blank" rel="noreferrer">{{ public_claim_url }}</a>
+              <div class="inline-actions">
+                <button type="button" class="ghost-button" data-copy-target="{{ code.display_code }}">Copy code</button>
+                <button type="button" class="ghost-button" data-copy-target="{{ public_claim_url }}">Copy public link</button>
+              </div>
             </div>
 
             <div class="link-state">
-              <span class="status-pill status-{{ link.status_class }}">{{ link.status_label }}</span>
-              {% if link.used_name %}
-                <p class="meta-line">Claimed by {{ link.used_name }}</p>
+              <span class="status-pill status-{{ code.status_class }}">{{ code.status_label }}</span>
+              {% if code.used_name %}
+                <p class="meta-line">Claimed by {{ code.used_name }}</p>
               {% endif %}
-              {% if link.used_at_display %}
-                <p class="meta-line">{{ link.used_at_display }}</p>
+              {% if code.used_at_display %}
+                <p class="meta-line">{{ code.used_at_display }}</p>
               {% endif %}
             </div>
           </article>
         {% endfor %}
       </div>
     {% else %}
-      <p class="muted-note">No links yet. Create your first one above.</p>
+      <p class="muted-note">No codes yet. Create your first batch above.</p>
     {% endif %}
   </section>
 </main>
