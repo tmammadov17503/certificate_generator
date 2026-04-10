@@ -5,8 +5,8 @@
   <section class="claim-layout">
     <article class="preview-panel">
       <p class="eyebrow">Certificate Preview</p>
-      <h1>Claim your PDF certificate</h1>
-      <p class="lead">Everyone uses this same page. Enter your one-time code and your name, then download the PDF once.</p>
+      <h1>Download your PDF certificate</h1>
+      <p class="lead">Type the recipient name exactly as it should appear on the certificate, then download the PDF instantly.</p>
 
       <div class="certificate-preview">
         <img src="{{ url_for('static', filename='certificate-template.png') }}" alt="Certificate preview">
@@ -17,34 +17,19 @@
           data-placeholder="Recipient Name"
         >{{ current_name }}</div>
       </div>
-      <p class="preview-note">The preview is approximate. The generated PDF uses the exact template image and the same centered name placement.</p>
+      <p class="preview-note">The preview is approximate. The downloaded PDF uses the exact certificate template and the same centered name placement.</p>
     </article>
 
     <article class="form-panel">
-      <span class="status-pill status-warning">One-time code required</span>
-      <h2>Enter your code and name</h2>
-      <p class="panel-copy">Your code works only once. After a successful download, the same code cannot be used again.</p>
+      <span class="status-pill status-warning">Name only</span>
+      <h2>Enter recipient name</h2>
+      <p class="panel-copy">No code and no login are required. Just enter the name and download the certificate.</p>
 
       {% if error_message %}
         <div class="alert alert-error">{{ error_message }}</div>
       {% endif %}
 
       <form method="post" class="stack-form" data-claim-form>
-        <label for="code">One-time code</label>
-        <input
-          id="code"
-          name="code"
-          type="text"
-          maxlength="9"
-          placeholder="ABCD-7FQ2"
-          value="{{ current_code }}"
-          autocomplete="off"
-          autocapitalize="characters"
-          spellcheck="false"
-          required
-          data-code-input
-        >
-
         <label for="name">Full name</label>
         <input
           id="name"
@@ -58,13 +43,8 @@
           data-name-input
         >
 
-        <button type="submit" class="primary-button" data-submit-label="Preparing PDF...">Download PDF once</button>
+        <button type="submit" class="primary-button" data-submit-label="Preparing PDF...">Download PDF</button>
       </form>
-
-      {% if code_details and code_details.label %}
-        <p class="meta-line">Code note: {{ code_details.label }}</p>
-      {% endif %}
-      <p class="meta-line">Organizer link: <a href="{{ public_claim_url }}">{{ public_claim_url }}</a></p>
     </article>
   </section>
 </main>
