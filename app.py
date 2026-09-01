@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_TEMPLATE_IMAGE = BASE_DIR / "static" / "certificate-template.png"
 DEFAULT_BUNDLED_FONT = BASE_DIR / "static" / "fonts" / "NotoSans-Regular.ttf"
 
-NAME_BOX = (472, 600, 1532, 710)
+NAME_BOX = (472, 585, 1532, 695)
 NAME_COLOR = (0, 100, 158)
 MAX_FONT_SIZE = 92
 MIN_FONT_SIZE = 40

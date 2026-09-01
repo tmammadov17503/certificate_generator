@@ -147,10 +147,10 @@ def main() -> None:
     draw.ellipse((982, 548, 1017, 583), fill=GOLD)
 
     # This clear field is intentionally left for the app to render the recipient name.
-    center_text(draw, 705, "In recognition of your", heading_font, INK)
+    center_text(draw, 735, "In recognition of your", heading_font, INK)
     next_y = wrapped_center_text(
         draw,
-        760,
+        790,
         "active participation, valuable contributions, and dedicated involvement in the activities and initiatives of IEEE during the 2025-2026 term.",
         body_font,
         INK,
@@ -167,7 +167,7 @@ def main() -> None:
         1390,
         15,
     )
-    center_text(draw, 1130, "With gratitude and appreciation for your dedication and service.", body_emphasis_font, TEAL)
+    center_text(draw, 1160, "With gratitude and appreciation for your dedication and service.", body_emphasis_font, TEAL)
 
     founder_signature = non_white_crop(Image.open(FOUNDER_SIGNATURE_PATH).convert("RGBA"), (0, 0, 2172, 724), 235)
     paste_contained(canvas, founder_signature, (720, 1200, 1279, 1320))

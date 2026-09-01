@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Download an IEEE ADA Club Certificate of Appreciation.">
+  <title>Certificate of Appreciation | IEEE ADA Club</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="intro">
+      <p class="eyebrow">IEEE ADA Club</p>
+      <h1>Certificate of<br><em>Appreciation</em></h1>
+      <p class="intro-copy">Enter the recipient's full name exactly as it should appear. The completed certificate downloads immediately as a PDF.</p>
+
+      <form id="certificate-form" class="certificate-form" novalidate>
+        <label for="recipient-name">Recipient full name</label>
+        <input id="recipient-name" name="recipient-name" type="text" maxlength="80" autocomplete="name" placeholder="e.g. Aysel Mammadova" required>
+        <p id="form-message" class="form-message" aria-live="polite"></p>
+        <button id="download-button" type="submit">Download PDF</button>
+      </form>
+
+      <p class="privacy-note">No login, code, or personal data is stored. The certificate is generated on this device.</p>
+    </section>
+
+    <section class="preview-section" aria-label="Certificate preview">
+      <div class="preview-frame">
+        <img id="certificate-template" src="certificate-template.png" alt="IEEE ADA Club Certificate of Appreciation template">
+        <div id="name-preview" class="name-preview">Recipient Name</div>
+      </div>
+      <p class="preview-caption">Preview only. The PDF uses this full-resolution certificate design.</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

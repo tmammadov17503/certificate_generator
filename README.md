@@ -48,10 +48,12 @@ http://127.0.0.1:5050
 
 ## Deployment direction
 
-The easiest hosted path for this app is a Python platform that supports:
+The public site can run entirely on GitHub Pages. The static version is in `docs/` and generates the PDF in the visitor's browser, with no Railway server, database, or saved recipient data.
 
-- a public web service URL
-- a persistent disk or volume
-- environment variables
+After enabling GitHub Pages for this repository with **Source: GitHub Actions**, the public link will be:
 
-This app is already prepared for that model.
+```text
+https://tmammadov17503.github.io/certificate_generator/
+```
+
+Each push that changes `docs/` automatically publishes the updated site through `.github/workflows/deploy-pages.yml`.
