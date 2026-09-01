@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATH = ROOT / "assets" / "branding-source.png"
+FOUNDER_SIGNATURE_PATH = ROOT / "assets" / "founder-signature.png"
 OUTPUT_PATH = ROOT / "static" / "certificate-template.png"
 NOTO_FONT = ROOT / "static" / "fonts" / "NotoSans-Regular.ttf"
 
@@ -110,8 +111,8 @@ def add_corner_geometry(draw: ImageDraw.ImageDraw) -> None:
 
 
 def main() -> None:
-    if not SOURCE_PATH.exists():
-        raise FileNotFoundError(f"Branding source not found: {SOURCE_PATH}")
+    if not SOURCE_PATH.exists() or not FOUNDER_SIGNATURE_PATH.exists():
+        raise FileNotFoundError("Certificate branding assets are missing.")
 
     source = Image.open(SOURCE_PATH).convert("RGBA")
     canvas = Image.new("RGBA", (WIDTH, HEIGHT), PAPER)
@@ -140,19 +141,17 @@ def main() -> None:
     center_text(draw, 185, "OF APPRECIATION", subtitle_font, "#B9E7EB")
 
     ieee = non_white_crop(source, (80, 235, 530, 510))
-    usg = non_white_crop(source, (1580, 250, 1940, 530))
-    paste_contained(canvas, ieee, (110, 330, 455, 530))
-    paste_contained(canvas, usg, (1560, 320, 1895, 535))
+    paste_contained(canvas, ieee, (700, 320, 1299, 475))
 
-    center_text(draw, 365, "PRESENTED TO", heading_font, TEAL)
-    draw.line((770, 420, 1229, 420), fill=GOLD, width=3)
-    draw.ellipse((982, 413, 1017, 448), fill=GOLD)
+    center_text(draw, 505, "PRESENTED TO", heading_font, TEAL)
+    draw.line((770, 555, 1229, 555), fill=GOLD, width=3)
+    draw.ellipse((982, 548, 1017, 583), fill=GOLD)
 
     # This clear field is intentionally left for the app to render the recipient name.
-    center_text(draw, 680, "In recognition of your", heading_font, INK)
+    center_text(draw, 705, "In recognition of your", heading_font, INK)
     next_y = wrapped_center_text(
         draw,
-        740,
+        760,
         "active participation, valuable contributions, and dedicated involvement in the activities and initiatives of IEEE during the 2025-2026 term.",
         body_font,
         INK,
@@ -169,25 +168,20 @@ def main() -> None:
         1390,
         15,
     )
-    center_text(draw, 1127, "With gratitude and appreciation for your dedication and service.", body_emphasis_font, TEAL)
+    center_text(draw, 1130, "With gratitude and appreciation for your dedication and service.", body_emphasis_font, TEAL)
 
-    signature_left = non_white_crop(source, (300, 1050, 740, 1228), 235)
-    signature_right = non_white_crop(source, (1210, 1045, 1680, 1235), 235)
-    paste_contained(canvas, signature_left, (225, 1210, 735, 1325))
-    paste_contained(canvas, signature_right, (1264, 1208, 1774, 1328))
+    founder_signature = non_white_crop(Image.open(FOUNDER_SIGNATURE_PATH).convert("RGBA"), (0, 0, 2172, 724), 235)
+    paste_contained(canvas, founder_signature, (720, 1200, 1279, 1320))
 
-    draw.line((220, 1337, 750, 1337), fill=INK, width=2)
-    draw.line((1249, 1337, 1779, 1337), fill=INK, width=2)
+    draw.line((690, 1337, 1309, 1337), fill=INK, width=2)
     signer_font = font(r"C:\Windows\Fonts\calibri.ttf", 31)
     signer_role_font = font(r"C:\Windows\Fonts\calibri.ttf", 22)
-    text_centered_at(draw, 485, 1352, "Taghi Mammadov", signer_font, INK)
-    text_centered_at(draw, 485, 1393, "President of IEEE ADA Club", signer_role_font, "#405968")
-    text_centered_at(draw, 1514, 1352, "Murad Orujov", signer_font, INK)
-    text_centered_at(draw, 1514, 1393, "USG Future Hub Chair of the Development Center", signer_role_font, "#405968")
+    text_centered_at(draw, WIDTH // 2, 1352, "Taghi Mammadov", signer_font, INK)
+    text_centered_at(draw, WIDTH // 2, 1393, "Founder, IEEE ADA Club", signer_role_font, "#405968")
 
     draw.rectangle((50, 1450, WIDTH - 50, HEIGHT - 50), fill=NAVY)
     draw.rectangle((50, 1450, WIDTH - 50, 1458), fill=GOLD)
-    center_text(draw, 1472, "IEEE ADA CLUB  |  USG FUTURE HUB  |  2025-2026", footer_font, "#D5F0F0")
+    center_text(draw, 1472, "IEEE ADA CLUB  |  2025-2026", footer_font, "#D5F0F0")
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     canvas.convert("RGB").save(OUTPUT_PATH, format="PNG", optimize=True)
