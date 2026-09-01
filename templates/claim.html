@@ -4,9 +4,9 @@
 <main class="shell shell-claim">
   <section class="claim-layout">
     <article class="preview-panel">
-      <p class="eyebrow">Certificate Preview</p>
-      <h1>Download your PDF certificate</h1>
-      <p class="lead">Type the recipient name exactly as it should appear on the certificate, then download the PDF instantly.</p>
+      <p class="eyebrow">IEEE ADA Club and USG Future Hub</p>
+      <h1>Certificate of Appreciation</h1>
+      <p class="lead">Enter the recipient name exactly as it should appear on the Certificate of Appreciation, then download the PDF instantly.</p>
 
       <div class="certificate-preview">
         <img src="{{ url_for('static', filename='certificate-template.png') }}" alt="Certificate preview">
@@ -21,9 +21,9 @@
     </article>
 
     <article class="form-panel">
-      <span class="status-pill status-warning">Name only</span>
+      <span class="status-pill status-warning">2025-2026 Term</span>
       <h2>Enter recipient name</h2>
-      <p class="panel-copy">No code and no login are required. Just enter the name and download the certificate.</p>
+      <p class="panel-copy">No code or login is required. Enter the name, then download the completed Certificate of Appreciation.</p>
 
       {% if error_message %}
         <div class="alert alert-error">{{ error_message }}</div>
@@ -43,7 +43,7 @@
           data-name-input
         >
 
-        <button type="submit" class="primary-button" data-submit-label="Preparing PDF...">Download PDF</button>
+        <button type="submit" class="primary-button" data-submit-label="Preparing PDF...">Download Certificate PDF</button>
       </form>
     </article>
   </section>

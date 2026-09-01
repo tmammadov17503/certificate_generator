@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_TEMPLATE_IMAGE = BASE_DIR / "static" / "certificate-template.png"
 DEFAULT_BUNDLED_FONT = BASE_DIR / "static" / "fonts" / "NotoSans-Regular.ttf"
 
-NAME_BOX = (472, 592, 1532, 688)
+NAME_BOX = (472, 510, 1532, 650)
 NAME_COLOR = (0, 100, 158)
 MAX_FONT_SIZE = 92
 MIN_FONT_SIZE = 40
@@ -99,13 +99,13 @@ def create_app(test_config: dict[str, Any] | None = None) -> Flask:
             except ValueError as exc:
                 return render_template(
                     "claim.html",
-                    page_title="Claim Certificate",
+                    page_title="Certificate of Appreciation",
                     current_name=current_name,
                     error_message=str(exc),
                 ), 400
 
             pdf_bytes = build_certificate_pdf(recipient_name)
-            download_name = f"AI-In-Action-Certificate-{slugify_filename(recipient_name)}.pdf"
+            download_name = f"IEEE-Certificate-of-Appreciation-{slugify_filename(recipient_name)}.pdf"
             return send_file(
                 io.BytesIO(pdf_bytes),
                 mimetype="application/pdf",
@@ -115,7 +115,7 @@ def create_app(test_config: dict[str, Any] | None = None) -> Flask:
 
         return render_template(
             "claim.html",
-            page_title="Claim Certificate",
+            page_title="Certificate of Appreciation",
             current_name=current_name,
             error_message=error_message,
         )

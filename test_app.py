@@ -16,12 +16,13 @@ class CertificateClaimAppTests(unittest.TestCase):
     def test_home_page_loads(self) -> None:
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Download your PDF certificate", response.data)
+        self.assertIn(b"Certificate of Appreciation", response.data)
 
     def test_valid_name_downloads_pdf(self) -> None:
         response = self.client.post("/", data={"name": "Murad Orujov"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.mimetype, "application/pdf")
+        self.assertIn("IEEE-Certificate-of-Appreciation-murad-orujov.pdf", response.headers["Content-Disposition"])
 
     def test_bundled_font_is_available(self) -> None:
         font_path = self.app.config["FONT_PATH"]

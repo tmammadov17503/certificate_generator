@@ -1,12 +1,12 @@
 # Certificate Claim App
 
-This app provides one public certificate page. A participant enters a name and downloads the PDF certificate immediately.
+This app provides one public Certificate of Appreciation page for the IEEE ADA Club and USG Future Hub 2025-2026 term. A participant enters a name and downloads the finished PDF immediately.
 
 ## What it does
 
 - Gives you one public certificate page to share with everyone
 - Shows a certificate page where the participant enters a name
-- Generates the PDF using your uploaded certificate template
+- Generates the PDF using the included Certificate of Appreciation design
 - Downloads the PDF immediately
 
 ## Run locally
@@ -32,6 +32,7 @@ http://127.0.0.1:5050
 
 - `static/certificate-template.png`: your certificate template
 - `static/fonts/NotoSans-Regular.ttf`: bundled open font used by the PDF renderer so name sizing stays correct in deployment
+- `scripts/generate_appreciation_template.py`: reproducibly generates the current certificate design from the supplied logo and signature source
 
 ## Optional environment variables
 
