@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_PATH = ROOT / "assets" / "branding-source.png"
+IEEE_LOGO_PATH = ROOT / "assets" / "ieee-blue-logo.png"
 FOUNDER_SIGNATURE_PATH = ROOT / "assets" / "founder-signature.png"
 OUTPUT_PATH = ROOT / "static" / "certificate-template.png"
 NOTO_FONT = ROOT / "static" / "fonts" / "NotoSans-Regular.ttf"
@@ -111,10 +111,9 @@ def add_corner_geometry(draw: ImageDraw.ImageDraw) -> None:
 
 
 def main() -> None:
-    if not SOURCE_PATH.exists() or not FOUNDER_SIGNATURE_PATH.exists():
+    if not IEEE_LOGO_PATH.exists() or not FOUNDER_SIGNATURE_PATH.exists():
         raise FileNotFoundError("Certificate branding assets are missing.")
 
-    source = Image.open(SOURCE_PATH).convert("RGBA")
     canvas = Image.new("RGBA", (WIDTH, HEIGHT), PAPER)
     draw = ImageDraw.Draw(canvas)
 
@@ -140,8 +139,8 @@ def main() -> None:
     center_text(draw, 94, "CERTIFICATE", title_font, "#FFFFFF")
     center_text(draw, 185, "OF APPRECIATION", subtitle_font, "#B9E7EB")
 
-    ieee = non_white_crop(source, (80, 235, 530, 510))
-    paste_contained(canvas, ieee, (700, 320, 1299, 475))
+    ieee = non_white_crop(Image.open(IEEE_LOGO_PATH).convert("RGBA"), (0, 0, 512, 512))
+    paste_contained(canvas, ieee, (850, 315, 1149, 485))
 
     center_text(draw, 505, "PRESENTED TO", heading_font, TEAL)
     draw.line((770, 555, 1229, 555), fill=GOLD, width=3)

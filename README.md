@@ -32,7 +32,7 @@ http://127.0.0.1:5050
 
 - `static/certificate-template.png`: your certificate template
 - `static/fonts/NotoSans-Regular.ttf`: bundled open font used by the PDF renderer so name sizing stays correct in deployment
-- `scripts/generate_appreciation_template.py`: reproducibly generates the current certificate design from the supplied IEEE logo and founder signature
+- `scripts/generate_appreciation_template.py`: reproducibly generates the current certificate design from the supplied blue IEEE logo and founder signature
 
 ## Optional environment variables
 
